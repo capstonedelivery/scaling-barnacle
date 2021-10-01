@@ -1,0 +1,76 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+void up_heapify(int start, int end, int arr[]){
+	
+	int child_id=end;
+	int parent = (child_id-1)/2;
+	if(child_id<0||parent<0){
+		return;
+	}
+	if(arr[parent]>arr[child_id]){
+		swap(arr[parent],arr[child_id]);
+	}
+	else{
+		return;
+	}
+	up_heapify(start,parent,arr);
+}
+
+
+void down_heapify(int arr[], int n, int root){
+	int parent = root;
+	int min_id = parent;
+	int lchild = 2*parent +1;
+	int rchild = 2*parent +2;
+	if(root>n) return;
+	
+	if(lchild<n && arr[parent]>arr[lchild]){
+		min_id = lchild;
+	}
+	if(rchild<n && arr[min_id]>arr[rchild]){
+		min_id = rchild;
+	}
+	if(min_id==parent){
+		return;
+	}
+	swap(arr[min_id],arr[parent]);
+	down_heapify(arr,n,min_id);
+}
+ 
+void output(int arr[], int n){
+
+	for(int i=0;i<n;i++){
+		cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+}			
+
+int inplace_heap_sort(int arr[], int &n){
+	
+	//inserting
+	for(int i=1;i<n;i++){
+		up_heapify(0,i,arr);
+	}
+	cout<<"min heap so formed is:"<<endl;
+	output(arr,n);
+	
+	//removal
+	int heap_size=n;
+	while(heap_size>1){
+		swap(arr[0],arr[heap_size-1]);
+		heap_size--;
+		down_heapify(arr,heap_size,0);
+	}
+}
+
+
+int main(){
+	int arr[]={9,7,6,8,4,5,10,1,2};
+	int n=9;
+//	int arr[]={3,2,7,1};
+	inplace_heap_sort(arr,n);
+	output(arr,n);
+
+}
+
