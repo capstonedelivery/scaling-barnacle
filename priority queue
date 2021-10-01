@@ -1,0 +1,142 @@
+#include<iostream>
+#include<bits/stdc++.h>
+#include<vector>
+using namespace std;
+
+class heap{
+	
+	vector<int> v;
+	public:
+		heap(){
+			
+		}
+		int get_size(){
+			return v.size();
+		}
+		
+		int get_min(){
+			if(get_size()>0){
+				return v[0];
+			}
+			else{
+				return 0;
+			}
+		}
+		
+		int insert_inheap(int value){
+			v.push_back(value);
+			up_heapify(v.size()-1);
+		}
+		void up_heapify(int child_id){
+			if(child_id<=0){
+				cout<<"returnng cond1"<<endl;
+				return;
+			}
+			int i = (child_id-1)/2;
+			if(i<0){
+				cout<<"returnng cond2 "<<endl;
+				return; 
+			}
+		
+			if(v[i]>v[2*i+1]){
+				cout<<"swapping lc"<<endl;
+				swap(v[i],v[child_id]);
+			}
+//			else if(v[i]> v[2*i+2]){
+//				cout<<"swapping rc"<<endl;
+//				swap(v[i], v[2*i+2]);			
+//			}
+			else{
+				cout<<"returning"<<endl;
+				return;
+			}
+			up_heapify(i);
+		}
+		
+		void up_heapify(int start, int end, int arr[]){
+			int child_id=end;
+			int parent = (child_id-1)/2;
+			if(child_id<0||parent<0){
+				return;
+			}
+			if(arr[parent]>arr[child_id]){
+				swap(arr[parent],arr[child_id]);
+			}
+			else{
+				return;
+			}
+			up_heapify(start,parent,arr);
+		}
+
+		int inplace_heap_sort(int arr[], int &n){
+			for(int i=1;i<n;i++){
+				up_heapify(0,i,arr);
+			}
+			cout<<"min heap so formed is:"<<endl;
+			for(int i=0;i<n;i++){
+				cout<<arr[i]<<" ";
+			}
+			cout<<endl;
+			
+	}
+ 
+			
+		
+};
+
+int main(){
+	heap obj;
+//	obj.insert_inheap(11);
+//	obj.insert_inheap(2);
+//	obj.insert_inheap(9);
+//	obj.insert_inheap(4);
+//	obj.insert_inheap(5);
+//	obj.insert_inheap(6);
+//	obj.insert_inheap(7);
+//	cout<<obj.get_min();
+	int arr[]={9,7,6,8,4,5,10,1,2};
+	int n=9;
+	obj.inplace_heap_sort(arr,n);
+	n=9;
+	for(int i=n-1;i>=0;i--){
+		cout<<arr[i]<<" ";
+	}
+	cout<<endl;
+}
+
+
+		int remove_min(int n,int arr[]){
+			int temp = arr[0];
+			swap(arr[0],arr[n]);
+			arr[n]=temp;
+			down_heapify(arr,n,0);
+			
+			return temp;
+		}
+		
+		void down_heapify(int arr[], int &n, int root){
+	
+			int parent = s;
+			int min_id = parent;
+			int lchild = 2*parent+1;
+			int rchild = 2*parent+2;
+			if(parent>e){
+				return;
+			}
+			if( lchild>e){
+				return ;
+			}
+			if(rchild>e) return;
+			if(arr[parent]>arr[lchild]){
+				min_id=lchild;
+			}
+			if(arr[min_id]>arr[rchild]){
+				min_id=rchild;
+			}
+			if(min_id==parent){
+				return;
+			}
+			swap(arr[parent],arr[min_id]);
+			down_heapify(arr,n,min_id);
+		}
+		
